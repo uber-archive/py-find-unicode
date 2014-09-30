@@ -64,6 +64,10 @@ class Checker(ast.NodeVisitor):
                     and not (node.keywords or node.kwargs or node.starargs)):
                 self.errors.append(IllegalLine(
                     'unicode() called without explicit encoding', node, self.filename))
+            if len(node.args) >= 4:
+                self.errors.append(IllegalLine(
+                    'unicode() called with too many positional arguments',
+                    node, self.filename))
         self.generic_visit(node)
 
     def visit(self, node):
